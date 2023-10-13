@@ -2,7 +2,10 @@ package org.wit.surfmate.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuItem
 import com.google.android.material.snackbar.Snackbar
+import org.wit.surfmate.R
 import org.wit.surfmate.databinding.ActivitySurfspotBinding
 import org.wit.surfmate.main.MainApp
 import org.wit.surfmate.models.SurfspotModel
@@ -20,6 +23,9 @@ class SurfmateActivity : AppCompatActivity() {
 
         binding = ActivitySurfspotBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.toolbarAdd.title = title
+        setSupportActionBar(binding.toolbarAdd)
 
         app = application as MainApp
 
@@ -44,5 +50,19 @@ class SurfmateActivity : AppCompatActivity() {
                     .show()
             }
         }
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.menu_surfspot, menu)
+        return super.onCreateOptionsMenu(menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.item_cancel -> {
+                finish()
+            }
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
