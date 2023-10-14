@@ -10,10 +10,12 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.wit.surfmate.R
 import org.wit.surfmate.adapters.SurfmateAdapter
+import org.wit.surfmate.adapters.SurfmateListener
 import org.wit.surfmate.databinding.ActivitySurfspotListBinding
 import org.wit.surfmate.main.MainApp
+import org.wit.surfmate.models.SurfspotModel
 
-class SurfmateListActivity : AppCompatActivity() {
+class SurfmateListActivity : AppCompatActivity(), SurfmateListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivitySurfspotListBinding
@@ -29,7 +31,7 @@ class SurfmateListActivity : AppCompatActivity() {
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
-        binding.recyclerView.adapter = SurfmateAdapter(app.surfspots)
+        binding.recyclerView.adapter = SurfmateAdapter(app.surfspots.findAll(), this)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -53,7 +55,23 @@ class SurfmateListActivity : AppCompatActivity() {
         ) {
             if (it.resultCode == Activity.RESULT_OK) {
                 (binding.recyclerView.adapter)?.
-                notifyItemRangeChanged(0,app.surfspots.size)
+                notifyItemRangeChanged(0,app.surfspots.findAll().size)
+            }
+        }
+
+    override fun onSurfspotClick(surfspot: SurfspotModel) {
+        val launcherIntent = Intent(this, SurfmateActivity::class.java)
+        launcherIntent.putExtra("surfspot_edit", surfspot)
+        getClickResult.launch(launcherIntent)
+    }
+
+    private val getClickResult =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        ) {
+            if (it.resultCode == Activity.RESULT_OK) {
+                (binding.recyclerView.adapter)?.
+                notifyItemRangeChanged(0,app.surfspots.findAll().size)
             }
         }
 }

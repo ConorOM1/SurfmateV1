@@ -6,7 +6,12 @@ import androidx.recyclerview.widget.RecyclerView
 import org.wit.surfmate.databinding.CardSurfspotBinding
 import org.wit.surfmate.models.SurfspotModel
 
-class `SurfmateAdapter` constructor(private var surfspots: List<SurfspotModel>) :
+interface SurfmateListener {
+    fun onSurfspotClick(surfspot: SurfspotModel)
+}
+
+class `SurfmateAdapter` constructor(private var surfspots: List<SurfspotModel>,
+                                    private val listener: SurfmateListener) :
     RecyclerView.Adapter<`SurfmateAdapter`.MainHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MainHolder {
@@ -18,7 +23,7 @@ class `SurfmateAdapter` constructor(private var surfspots: List<SurfspotModel>) 
 
     override fun onBindViewHolder(holder: MainHolder, position: Int) {
         val surfspot = surfspots[holder.adapterPosition]
-        holder.bind(surfspot)
+        holder.bind(surfspot, listener)
     }
 
     override fun getItemCount(): Int = surfspots.size
@@ -26,9 +31,10 @@ class `SurfmateAdapter` constructor(private var surfspots: List<SurfspotModel>) 
     class MainHolder(private val binding : CardSurfspotBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(surfspot: SurfspotModel) {
+        fun bind(surfspot: SurfspotModel, listener:SurfmateListener) {
             binding.surfspotTitle.text = surfspot.title
             binding.description.text = surfspot.description
+            binding.root.setOnClickListener { listener.onSurfspotClick(surfspot) }
         }
     }
 }

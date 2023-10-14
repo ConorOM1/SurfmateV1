@@ -15,12 +15,10 @@ class SurfmateActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySurfspotBinding
     var surfspot = SurfspotModel()
-//    val surfspots = ArrayList<SurfspotModel>()
     lateinit var app: MainApp
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivitySurfspotBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -29,18 +27,17 @@ class SurfmateActivity : AppCompatActivity() {
 
         app = application as MainApp
 
-        i("Surfmate Activity started...")
+        if (intent.hasExtra("surfspot_edit")) {
+            surfspot = intent.extras?.getParcelable("surfspot_edit")!!
+            binding.surfspotTitle.setText(surfspot.title)
+            binding.description.setText(surfspot.description)
+        }
 
         binding.btnAdd.setOnClickListener() {
             surfspot.title = binding.surfspotTitle.text.toString()
             surfspot.description = binding.description.text.toString()
             if (surfspot.title.isNotEmpty()) {
-
-                app.surfspots.add(surfspot.copy())
-                i("add Button Pressed: ${surfspot}")
-                for (i in app.surfspots.indices) {
-                    i("Surfspot[$i]:${this.app.surfspots[i]}")
-                }
+                app.surfspots.create(surfspot.copy())
                 setResult(RESULT_OK)
                 finish()
             }
