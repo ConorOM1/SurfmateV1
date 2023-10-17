@@ -1,8 +1,12 @@
 <resources>
     <string name="app_name">Surfmate</string>
-    <string name="button_addSurfspot">Add Surfspot</string>
-    <string name="hint_surfspotTitle">Surfspot Title</string>
+    <string name="button_addSurfspot">Add Surf Spot</string>
+    <string name="hint_surfspotTitle">Surf Spot Title</string>
     <string name="hint_surfspotDescription">Description </string>
     <string name="menu_addSurfspot">Add</string>
     <string name="menu_cancelSurfspot">Cancel</string>
+    <string name="enter_surfspot_title"> Please enter a Surf Spot Name </string>
+    <string name="save_surfspot"> Save Surf Spot </string>
+    <string name="button_addImage"> Add Image </string>
+    <string name="select_surfspot_image">Select Surf Spot Image</string>
 </resources>
