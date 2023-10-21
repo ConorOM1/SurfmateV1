@@ -1,6 +1,7 @@
 package org.wit.surfmate.activities
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
@@ -13,6 +14,7 @@ import org.wit.surfmate.R
 import org.wit.surfmate.databinding.ActivitySurfspotBinding
 import org.wit.surfmate.showImagePicker
 import org.wit.surfmate.main.MainApp
+import org.wit.surfmate.models.Location
 import org.wit.surfmate.models.SurfspotModel
 import timber.log.Timber.Forest.i
 
@@ -23,7 +25,7 @@ class SurfmateActivity : AppCompatActivity() {
     var surfspot = SurfspotModel()
     lateinit var app: MainApp
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
-//    val IMAGE_REQUEST = 1
+    private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +47,9 @@ class SurfmateActivity : AppCompatActivity() {
             Picasso.get()
                 .load(surfspot.image)
                 .into(binding.surfspotImage)
+            if (surfspot.image != Uri.EMPTY) {
+                binding.chooseImage.setText(R.string.change_surfspot_image)
+            }
         }
 
         binding.btnAdd.setOnClickListener() {
@@ -69,7 +74,20 @@ class SurfmateActivity : AppCompatActivity() {
             showImagePicker(imageIntentLauncher)
         }
 
+        binding.surfspotLocation.setOnClickListener {
+            val location = Location(52.245696, -7.139102, 15f)
+            if (surfspot.zoom != 0f) {
+                location.lat =  surfspot.lat
+                location.lng = surfspot.lng
+                location.zoom = surfspot.zoom
+            }
+            val launcherIntent = Intent(this, MapActivity::class.java)
+                .putExtra("location", location)
+            mapIntentLauncher.launch(launcherIntent)
+        }
+
         registerImagePickerCallback()
+        registerMapCallback()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -98,6 +116,27 @@ class SurfmateActivity : AppCompatActivity() {
                             Picasso.get()
                                 .load(surfspot.image)
                                 .into(binding.surfspotImage)
+                            binding.chooseImage.setText(R.string.change_surfspot_image)
+                        }
+                    }
+                    RESULT_CANCELED -> { } else -> { }
+                }
+            }
+    }
+
+    private fun registerMapCallback() {
+        mapIntentLauncher =
+            registerForActivityResult(ActivityResultContracts.StartActivityForResult())
+            { result ->
+                when (result.resultCode) {
+                    RESULT_OK -> {
+                        if (result.data != null) {
+                            i("Got Location ${result.data.toString()}")
+                            val location = result.data!!.extras?.getParcelable<Location>("location")!!
+                            i("Location == $location")
+                            surfspot.lat = location.lat
+                            surfspot.lng = location.lng
+                            surfspot.zoom = location.zoom
                         } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }

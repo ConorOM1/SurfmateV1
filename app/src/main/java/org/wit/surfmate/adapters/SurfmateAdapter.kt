@@ -3,6 +3,7 @@ package org.wit.surfmate.adapters
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.squareup.picasso.Picasso
 import org.wit.surfmate.databinding.CardSurfspotBinding
 import org.wit.surfmate.models.SurfspotModel
 
@@ -34,6 +35,7 @@ class `SurfmateAdapter` constructor(private var surfspots: List<SurfspotModel>,
         fun bind(surfspot: SurfspotModel, listener:SurfmateListener) {
             binding.surfspotTitle.text = surfspot.title
             binding.description.text = surfspot.description
+            Picasso.get().load(surfspot.image).resize(200,200).into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onSurfspotClick(surfspot) }
         }
     }

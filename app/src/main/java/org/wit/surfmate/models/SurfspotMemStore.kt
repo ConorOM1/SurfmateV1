@@ -27,6 +27,10 @@ class SurfspotMemStore : SurfspotStore {
         if (foundSurfspot != null) {
             foundSurfspot.title = surfspot.title
             foundSurfspot.description = surfspot.description
+            foundSurfspot.image = surfspot.image
+            foundSurfspot.lat = surfspot.lat
+            foundSurfspot.lng = surfspot.lng
+            foundSurfspot.zoom = surfspot.zoom
             logAll()
         }
     }

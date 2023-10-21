@@ -3,9 +3,8 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <application
-        android:name="org.wit.surfmate.main.MainApp"
+        android:name=".main.MainApp"
         android:allowBackup="true"
-        android:enableOnBackInvokedCallback="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
@@ -14,8 +13,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Surfmate"
         tools:targetApi="33">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="${MAPS_API_KEY}" />
+
         <activity
-            android:name="org.wit.surfmate.activities.SurfmateListActivity"
+            android:name=".activities.MapActivity"
+            android:exported="false"
+            android:label="@string/title_activity_map" />
+        <activity
+            android:name=".activities.SurfmateListActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,12 +35,10 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name="org.wit.surfmate.activities.SurfmateActivity">
+        <activity android:name=".activities.SurfmateActivity">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
     </application>
-
 </manifest>
