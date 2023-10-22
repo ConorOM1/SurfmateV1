@@ -72,6 +72,11 @@ class SurfspotJSONStore(private val context: Context) : SurfspotStore {
     private fun logAll() {
         surfspots.forEach { Timber.i("$it") }
     }
+
+    override fun findById(id:Long) : SurfspotModel? {
+        val foundSurfspot: SurfspotModel? = surfspots.find { it.id == id }
+        return foundSurfspot
+    }
 }
 
 class UriParser : JsonDeserializer<Uri>,JsonSerializer<Uri> {

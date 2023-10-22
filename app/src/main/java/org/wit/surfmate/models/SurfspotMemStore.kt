@@ -42,4 +42,9 @@ class SurfspotMemStore : SurfspotStore {
     private fun logAll() {
         surfspots.forEach { i("$it") }
     }
+
+    override fun findById(id:Long) : SurfspotModel? {
+        val foundSurfspot: SurfspotModel? = surfspots.find { it.id == id }
+        return foundSurfspot
+    }
 }

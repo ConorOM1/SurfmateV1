@@ -47,9 +47,18 @@ class SurfmateListActivity : AppCompatActivity(), SurfmateListener {
                 val launcherIntent = Intent(this, SurfmateActivity::class.java)
                 getResult.launch(launcherIntent)
             }
+            R.id.item_map -> {
+                val launcherIntent = Intent(this, SurfmateMapsActivity::class.java)
+                mapIntentLauncher.launch(launcherIntent)
+            }
         }
         return super.onOptionsItemSelected(item)
     }
+
+    private val mapIntentLauncher =
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()
+        )    { }
 
     private val getResult =
         registerForActivityResult(
