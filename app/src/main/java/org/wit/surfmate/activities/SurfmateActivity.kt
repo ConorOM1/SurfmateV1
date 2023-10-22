@@ -26,10 +26,11 @@ class SurfmateActivity : AppCompatActivity() {
     lateinit var app: MainApp
     private lateinit var imageIntentLauncher : ActivityResultLauncher<Intent>
     private lateinit var mapIntentLauncher : ActivityResultLauncher<Intent>
+    var edit = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        var edit = false
+        edit = false
         binding = ActivitySurfspotBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -71,7 +72,7 @@ class SurfmateActivity : AppCompatActivity() {
         }
 
         binding.chooseImage.setOnClickListener {
-            showImagePicker(imageIntentLauncher)
+            showImagePicker(imageIntentLauncher,this)
         }
 
         binding.surfspotLocation.setOnClickListener {
@@ -92,14 +93,17 @@ class SurfmateActivity : AppCompatActivity() {
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_surfspot, menu)
+        if (edit) menu.getItem(0).isVisible = true
         return super.onCreateOptionsMenu(menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
-            R.id.item_cancel -> {
+            R.id.item_delete -> {
+                setResult(99)
+                app.surfspots.delete(surfspot)
                 finish()
-            }
+            }        R.id.item_cancel -> { finish() }
         }
         return super.onOptionsItemSelected(item)
     }
@@ -112,12 +116,17 @@ class SurfmateActivity : AppCompatActivity() {
                     RESULT_OK -> {
                         if (result.data != null) {
                             i("Got Result ${result.data!!.data}")
-                            surfspot.image = result.data!!.data!!
+
+                            val image = result.data!!.data!!
+                            contentResolver.takePersistableUriPermission(image,
+                                Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                            surfspot.image = image
+
                             Picasso.get()
                                 .load(surfspot.image)
                                 .into(binding.surfspotImage)
                             binding.chooseImage.setText(R.string.change_surfspot_image)
-                        }
+                        } // end of if
                     }
                     RESULT_CANCELED -> { } else -> { }
                 }

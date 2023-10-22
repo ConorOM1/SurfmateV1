@@ -35,6 +35,10 @@ class SurfspotMemStore : SurfspotStore {
         }
     }
 
+    override fun delete(surfspot: SurfspotModel) {
+        surfspots.remove(surfspot)
+    }
+
     private fun logAll() {
         surfspots.forEach { i("$it") }
     }

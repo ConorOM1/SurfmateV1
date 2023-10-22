@@ -19,6 +19,8 @@ class SurfmateListActivity : AppCompatActivity(), SurfmateListener {
 
     lateinit var app: MainApp
     private lateinit var binding: ActivitySurfspotListBinding
+    private var position: Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -59,9 +61,10 @@ class SurfmateListActivity : AppCompatActivity(), SurfmateListener {
             }
         }
 
-    override fun onSurfspotClick(surfspot: SurfspotModel) {
+    override fun onSurfspotClick(surfspot: SurfspotModel, pos : Int) {
         val launcherIntent = Intent(this, SurfmateActivity::class.java)
         launcherIntent.putExtra("surfspot_edit", surfspot)
+        position = pos
         getClickResult.launch(launcherIntent)
     }
 
@@ -73,5 +76,7 @@ class SurfmateListActivity : AppCompatActivity(), SurfmateListener {
                 (binding.recyclerView.adapter)?.
                 notifyItemRangeChanged(0,app.surfspots.findAll().size)
             }
+            else // Deleting
+                if (it.resultCode == 99)     (binding.recyclerView.adapter)?.notifyItemRemoved(position)
         }
 }

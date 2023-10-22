@@ -8,7 +8,7 @@ import org.wit.surfmate.databinding.CardSurfspotBinding
 import org.wit.surfmate.models.SurfspotModel
 
 interface SurfmateListener {
-    fun onSurfspotClick(surfspot: SurfspotModel)
+    fun onSurfspotClick(surfspot: SurfspotModel, position : Int)
 }
 
 class `SurfmateAdapter` constructor(private var surfspots: List<SurfspotModel>,
@@ -36,7 +36,7 @@ class `SurfmateAdapter` constructor(private var surfspots: List<SurfspotModel>,
             binding.surfspotTitle.text = surfspot.title
             binding.description.text = surfspot.description
             Picasso.get().load(surfspot.image).resize(200,200).into(binding.imageIcon)
-            binding.root.setOnClickListener { listener.onSurfspotClick(surfspot) }
+            binding.root.setOnClickListener { listener.onSurfspotClick(surfspot, adapterPosition) }
         }
     }
 }

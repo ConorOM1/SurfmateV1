@@ -4,4 +4,5 @@ interface SurfspotStore {
     fun findAll(): List<SurfspotModel>
     fun create(surfspot: SurfspotModel)
     fun update(surfspot: SurfspotModel)
+    fun delete(surfspot: SurfspotModel)
 }
