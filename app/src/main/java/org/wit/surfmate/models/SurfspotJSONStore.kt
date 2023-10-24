@@ -45,12 +45,14 @@ class SurfspotJSONStore(private val context: Context) : SurfspotStore {
         val surfspotsList = findAll() as ArrayList<SurfspotModel>
         var foundSurfspot: SurfspotModel? = surfspotsList.find { p -> p.id == surfspot.id }
         if (foundSurfspot != null) {
-            foundSurfspot.title = surfspot.title
-            foundSurfspot.description = surfspot.description
+            foundSurfspot.name = surfspot.name
+            foundSurfspot.observations = surfspot.observations
             foundSurfspot.image = surfspot.image
             foundSurfspot.lat = surfspot.lat
             foundSurfspot.lng = surfspot.lng
             foundSurfspot.zoom = surfspot.zoom
+            foundSurfspot.rating = surfspot.rating
+
         }
         serialize()
     }

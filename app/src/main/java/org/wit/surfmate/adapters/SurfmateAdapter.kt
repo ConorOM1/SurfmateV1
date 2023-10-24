@@ -33,8 +33,9 @@ class `SurfmateAdapter` constructor(private var surfspots: List<SurfspotModel>,
         RecyclerView.ViewHolder(binding.root) {
 
         fun bind(surfspot: SurfspotModel, listener:SurfmateListener) {
-            binding.surfspotTitle.text = surfspot.title
-            binding.description.text = surfspot.description
+            binding.surfspotTitle.text = surfspot.name
+            binding.description.text = surfspot.observations
+            binding.surfSpotRating.rating = surfspot.rating
             Picasso.get().load(surfspot.image).resize(200,200).into(binding.imageIcon)
             binding.root.setOnClickListener { listener.onSurfspotClick(surfspot, adapterPosition) }
         }

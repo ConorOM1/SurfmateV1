@@ -39,7 +39,7 @@ class SurfmateMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListene
         map.uiSettings.isZoomControlsEnabled = true
         app.surfspots.findAll().forEach {
             val loc = LatLng(it.lat, it.lng)
-            val options = MarkerOptions().title(it.title).position(loc)
+            val options = MarkerOptions().title(it.name).position(loc)
             map.addMarker(options)?.tag = it.id
             map.moveCamera(CameraUpdateFactory.newLatLngZoom(loc, it.zoom))
         }
@@ -50,8 +50,8 @@ class SurfmateMapsActivity : AppCompatActivity(), GoogleMap.OnMarkerClickListene
         //val surfspot = marker.tag as SurfspotModel
         val tag = marker.tag as Long
         val surfspot = app.surfspots.findById(tag)
-        contentBinding.currentTitle.text = surfspot!!.title
-        contentBinding.currentDescription.text = surfspot.description
+        contentBinding.currentTitle.text = surfspot!!.name
+        contentBinding.currentDescription.text = surfspot.observations
         Picasso.get().load(surfspot.image).into(contentBinding.currentImage)
         return false
     }
