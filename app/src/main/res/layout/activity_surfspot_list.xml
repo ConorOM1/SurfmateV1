@@ -10,7 +10,7 @@
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#00B7FC"
+        android:background="@color/blue"
         android:fitsSystemWindows="true"
         app:elevation="0dip"
         app:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
@@ -19,9 +19,19 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="75dp"
-            app:logo="@drawable/surfmate_logo"
-            app:titleTextColor="@color/colorPrimary" />
-        />
+            app:title=""
+            app:titleTextColor="@color/colorPrimary">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/surfmate_logo"
+                android:layout_gravity="left|center_vertical"
+                android:contentDescription="App Logo"
+                android:adjustViewBounds="true"
+                android:paddingEnd="16dp"
+                android:maxHeight="65dp"/>
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.recyclerview.widget.RecyclerView
