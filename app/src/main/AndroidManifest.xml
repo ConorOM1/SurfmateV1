@@ -34,10 +34,14 @@
         <activity
             android:name=".activities.SurfmateListActivity"
             android:exported="true"/>
+
+        <activity android:name=".activities.LoginActivity" />
+
         <activity
             android:name=".activities.SplashScreen"
             android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
