@@ -29,12 +29,18 @@ class SurfmateListActivity : AppCompatActivity(), SurfmateListener {
         binding.toolbar.title = title
         setSupportActionBar(binding.toolbar)
 
+        // Set the logo for the action bar
+        supportActionBar?.setDisplayShowHomeEnabled(true)
+        supportActionBar?.setLogo(R.drawable.surfmate_logo)
+        supportActionBar?.setDisplayUseLogoEnabled(true)
+
         app = application as MainApp
 
         val layoutManager = LinearLayoutManager(this)
         binding.recyclerView.layoutManager = layoutManager
         binding.recyclerView.adapter = SurfmateAdapter(app.surfspots.findAll(), this)
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.menu_main, menu)
