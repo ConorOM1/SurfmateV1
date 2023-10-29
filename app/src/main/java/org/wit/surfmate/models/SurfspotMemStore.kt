@@ -25,12 +25,13 @@ class SurfspotMemStore : SurfspotStore {
     override fun update(surfspot: SurfspotModel) {
         var foundSurfspot: SurfspotModel? = surfspots.find { p -> p.id == surfspot.id }
         if (foundSurfspot != null) {
-            foundSurfspot.title = surfspot.title
-            foundSurfspot.description = surfspot.description
+            foundSurfspot.name = surfspot.name
+            foundSurfspot.observations = surfspot.observations
             foundSurfspot.image = surfspot.image
             foundSurfspot.lat = surfspot.lat
             foundSurfspot.lng = surfspot.lng
             foundSurfspot.zoom = surfspot.zoom
+            foundSurfspot.rating = surfspot.rating
             logAll()
         }
     }

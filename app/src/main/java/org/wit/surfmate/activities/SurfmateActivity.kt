@@ -17,6 +17,8 @@ import org.wit.surfmate.main.MainApp
 import org.wit.surfmate.models.Location
 import org.wit.surfmate.models.SurfspotModel
 import timber.log.Timber.Forest.i
+import android.widget.RatingBar
+import android.widget.Toast
 
 
 class SurfmateActivity : AppCompatActivity() {
@@ -36,14 +38,17 @@ class SurfmateActivity : AppCompatActivity() {
 
         binding.toolbarAdd.title = title
         setSupportActionBar(binding.toolbarAdd)
+        val ratingBar: RatingBar = findViewById(R.id.ratingBar)
+
 
         app = application as MainApp
 
         if (intent.hasExtra("surfspot_edit")) {
             edit = true
             surfspot = intent.extras?.getParcelable("surfspot_edit")!!
-            binding.surfspotTitle.setText(surfspot.title)
-            binding.description.setText(surfspot.description)
+            binding.surfspotTitle.setText(surfspot.name)
+            binding.description.setText(surfspot.observations)
+            ratingBar.rating = surfspot.rating  // Set the rating value for Edit mode
             binding.btnAdd.setText(R.string.save_surfspot)
             Picasso.get()
                 .load(surfspot.image)
@@ -53,10 +58,17 @@ class SurfmateActivity : AppCompatActivity() {
             }
         }
 
+        ratingBar.setOnRatingBarChangeListener { _, rating, fromUser ->
+            if (fromUser) {
+                Toast.makeText(this, "You rated the surfspot: $rating stars", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         binding.btnAdd.setOnClickListener() {
-            surfspot.title = binding.surfspotTitle.text.toString()
-            surfspot.description = binding.description.text.toString()
-            if (surfspot.title.isEmpty()) {
+            surfspot.name = binding.surfspotTitle.text.toString()
+            surfspot.observations = binding.description.text.toString()
+            surfspot.rating = ratingBar.rating  // Save the rating value
+            if (surfspot.name.isEmpty()) {
                 Snackbar.make(it,R.string.enter_surfspot_title, Snackbar.LENGTH_LONG)
                     .show()
             } else {
