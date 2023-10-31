@@ -17,7 +17,7 @@
         <ImageView
             android:id="@+id/img_logo"
             android:layout_width="wrap_content"
-            android:layout_height="383dp"
+            android:layout_height="216dp"
             android:layout_gravity="center"
             android:contentDescription="App Logo"
             android:paddingBottom="16dp"
@@ -30,15 +30,31 @@
             android:padding="30dp"
             android:text="Login"/>
         <EditText
-            android:id="@+id/et_user_name"
-            android:hint="User Name"
+            android:id="@+id/et_first_name"
+            android:hint="First Name"
             android:textColor="#6bfff7"
             android:textColorHint="@color/black"
             android:textAlignment="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
         <EditText
-            android:id="@+id/et_password"
+            android:id="@+id/et_last_name"
+            android:hint="Last Name"
+            android:textColor="#6bfff7"
+            android:textColorHint="@color/black"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/et_user_email"
+            android:hint="Email"
+            android:textColor="#6bfff7"
+            android:textColorHint="@color/black"
+            android:textAlignment="center"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/et_user_password"
             android:hint="Password"
             android:textColor="#6bfff7"
             android:textColorHint="@color/black"
@@ -59,8 +75,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
             <Button
-                android:id="@+id/btn_submit"
-                android:text="Submit"
+                android:id="@+id/btn_login"
+                android:text="Login"
+                android:textAllCaps="false"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+            <Button
+                android:id="@+id/btn_signup"
+                android:text="Sign Up"
                 android:textAllCaps="false"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
